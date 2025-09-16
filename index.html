@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Priceless London 旅行指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .card-summary {
+            transition: all 0.3s ease;
+        }
+        .group:hover .card-summary {
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .details-content {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6 sm:p-10 relative">
+
+    <!-- 语言切换按钮 -->
+    <div class="absolute top-4 left-4 z-50">
+        <button id="lang-toggle-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+            English
+        </button>
+    </div>
+
+    <div class="max-w-6xl mx-auto">
+        <!-- 标题区域 -->
+        <div class="text-center mb-10">
+            <h1 id="main-title" class="text-4xl sm:text-5xl font-extrabold text-gray-800 tracking-tight mb-2"></h1>
+            <p id="main-subtitle" class="text-lg text-gray-500"></p>
+        </div>
+
+        <!-- 每日行程卡片容器 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+
+            <!-- 第一天 -->
+            <details class="group bg-blue-50 hover:bg-blue-100 transition-colors duration-300 rounded-2xl shadow-md overflow-hidden">
+                <summary class="card-summary flex items-center justify-between p-5 sm:p-6 cursor-pointer list-none">
+                    <div class="flex-grow">
+                        <span id="day-1-date" class="text-lg font-bold text-blue-700 block mb-1"></span>
+                        <h2 id="day-1-title" class="text-xl sm:text-2xl font-bold text-blue-800"></h2>
+                    </div>
+                    <span class="text-blue-600 group-open:rotate-180 transform transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </summary>
+                <div class="details-content p-5 sm:p-6 pt-0 text-gray-600 space-y-4">
+                    <p id="day-1-content-1"></p>
+                    <p id="day-1-content-2"></p>
+                    <p id="day-1-content-3"></p>
+                    <div class="mt-4 p-4 bg-white rounded-xl border border-gray-200">
+                        <h3 id="day-1-tip-title" class="font-semibold text-gray-800 mb-2"></h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li id="day-1-tip-1"></li>
+                            <li id="day-1-tip-2"></li>
+                            <li id="day-1-tip-3"></li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 第二天 -->
+            <details class="group bg-purple-50 hover:bg-purple-100 transition-colors duration-300 rounded-2xl shadow-md overflow-hidden">
+                <summary class="card-summary flex items-center justify-between p-5 sm:p-6 cursor-pointer list-none">
+                    <div class="flex-grow">
+                        <span id="day-2-date" class="text-lg font-bold text-purple-700 block mb-1"></span>
+                        <h2 id="day-2-title" class="text-xl sm:text-2xl font-bold text-purple-800"></h2>
+                    </div>
+                    <span class="text-purple-600 group-open:rotate-180 transform transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </summary>
+                <div class="details-content p-5 sm:p-6 pt-0 text-gray-600 space-y-4">
+                    <p id="day-2-content-1"></p>
+                    <p id="day-2-content-2"></p>
+                    <div class="mt-4 p-4 bg-white rounded-xl border border-gray-200">
+                        <h3 id="day-2-tip-title" class="font-semibold text-gray-800 mb-2"></h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li id="day-2-tip-1"></li>
+                            <li id="day-2-tip-2"></li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 第三天 -->
+            <details class="group bg-emerald-50 hover:bg-emerald-100 transition-colors duration-300 rounded-2xl shadow-md overflow-hidden">
+                <summary class="card-summary flex items-center justify-between p-5 sm:p-6 cursor-pointer list-none">
+                    <div class="flex-grow">
+                        <span id="day-3-date" class="text-lg font-bold text-emerald-700 block mb-1"></span>
+                        <h2 id="day-3-title" class="text-xl sm:text-2xl font-bold text-emerald-800"></h2>
+                    </div>
+                    <span class="text-emerald-600 group-open:rotate-180 transform transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </summary>
+                <div class="details-content p-5 sm:p-6 pt-0 text-gray-600 space-y-4">
+                    <p id="day-3-content-1"></p>
+                    <p id="day-3-content-2"></p>
+                    <p id="day-3-content-3"></p>
+                    <div class="mt-4 p-4 bg-white rounded-xl border border-gray-200">
+                        <h3 id="day-3-tip-title" class="font-semibold text-gray-800 mb-2"></h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li id="day-3-tip-1"></li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 第四天 -->
+            <details class="group bg-orange-50 hover:bg-orange-100 transition-colors duration-300 rounded-2xl shadow-md overflow-hidden">
+                <summary class="card-summary flex items-center justify-between p-5 sm:p-6 cursor-pointer list-none">
+                    <div class="flex-grow">
+                        <span id="day-4-date" class="text-lg font-bold text-orange-700 block mb-1"></span>
+                        <h2 id="day-4-title" class="text-xl sm:text-2xl font-bold text-orange-800"></h2>
+                    </div>
+                    <span class="text-orange-600 group-open:rotate-180 transform transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </summary>
+                <div class="details-content p-5 sm:p-6 pt-0 text-gray-600 space-y-4">
+                    <p id="day-4-content-1"></p>
+                    <p id="day-4-content-2"></p>
+                    <div class="mt-4 p-4 bg-white rounded-xl border border-gray-200">
+                        <h3 id="day-4-tip-title" class="font-semibold text-gray-800 mb-2"></h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li id="day-4-tip-1"></li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 第五天 -->
+            <details class="group bg-red-50 hover:bg-red-100 transition-colors duration-300 rounded-2xl shadow-md overflow-hidden">
+                <summary class="card-summary flex items-center justify-between p-5 sm:p-6 cursor-pointer list-none">
+                    <div class="flex-grow">
+                        <span id="day-5-date" class="text-lg font-bold text-red-700 block mb-1"></span>
+                        <h2 id="day-5-title" class="text-xl sm:text-2xl font-bold text-red-800"></h2>
+                    </div>
+                    <span class="text-red-600 group-open:rotate-180 transform transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </summary>
+                <div class="details-content p-5 sm:p-6 pt-0 text-gray-600 space-y-4">
+                    <p id="day-5-content-1"></p>
+                    <p id="day-5-content-2"></p>
+                    <div class="mt-4 p-4 bg-white rounded-xl border border-gray-200">
+                        <h3 id="day-5-tip-title" class="font-semibold text-gray-800 mb-2"></h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li id="day-5-tip-1"></li>
+                            <li id="day-5-tip-2"></li>
+                            <li id="day-5-tip-3"></li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+
+            <!-- 第六天 -->
+            <details class="group bg-blue-500 hover:bg-blue-600 transition-colors duration-300 rounded-2xl shadow-md overflow-hidden">
+                <summary class="card-summary flex items-center justify-between p-5 sm:p-6 cursor-pointer list-none">
+                    <div class="flex-grow">
+                        <span id="day-6-date" class="text-lg font-bold text-white block mb-1"></span>
+                        <h2 id="day-6-title" class="text-xl sm:text-2xl font-bold text-white"></h2>
+                    </div>
+                    <span class="text-white group-open:rotate-180 transform transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </summary>
+                <div class="details-content p-5 sm:p-6 pt-0 text-white space-y-4">
+                    <p id="day-6-content-1"></p>
+                    <p id="day-6-content-2"></p>
+                    <p id="day-6-content-3"></p>
+                    <div class="mt-4 p-4 bg-blue-400 rounded-xl border border-blue-500">
+                        <h3 id="day-6-tip-title" class="font-semibold text-white mb-2"></h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li id="day-6-tip-1"></li>
+                            <li id="day-6-tip-2"></li>
+                            <li id="day-6-tip-3"></li>
+                            <li id="day-6-tip-4"></li>
+                            <li id="day-6-tip-5"></li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <!-- 财务与实用提示卡片 -->
+        <details class="group bg-gray-200 hover:bg-gray-300 transition-colors duration-300 rounded-2xl shadow-md overflow-hidden">
+            <summary class="card-summary flex items-center justify-between p-5 sm:p-6 cursor-pointer list-none">
+                <div class="flex-grow">
+                    <h2 id="tips-title" class="text-xl sm:text-2xl font-bold text-gray-800"></h2>
+                </div>
+                <span class="text-gray-600 group-open:rotate-180 transform transition-transform duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                </span>
+            </summary>
+            <div class="details-content p-5 sm:p-6 pt-0 text-gray-600 space-y-4">
+                <p id="tips-content-1"></p>
+                <div class="mt-4 p-4 bg-white rounded-xl border border-gray-200">
+                    <h3 id="cost-tips-title" class="font-semibold text-gray-800 mb-2"></h3>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li id="cost-tip-1"></li>
+                        <li id="cost-tip-2"></li>
+                        <li id="cost-tip-3"></li>
+                    </ul>
+                </div>
+                <div class="mt-4 p-4 bg-white rounded-xl border border-gray-200">
+                    <h3 id="general-tips-title" class="font-semibold text-gray-800 mb-2"></h3>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li id="general-tip-1"></li>
+                        <li id="general-tip-2"></li>
+                        <li id="general-tip-3"></li>
+                    </ul>
+                </div>
+
+                <!-- 汇率计算器部分 -->
+                <div class="mt-8 p-6 bg-white rounded-2xl border-2 border-green-500 shadow-lg">
+                    <h3 id="converter-title" class="text-xl font-bold text-green-700 mb-4 text-center"></h3>
+                    <div class="space-y-4">
+                        <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                            <label for="amount" id="label-amount" class="w-full sm:w-auto text-gray-700 font-medium"></label>
+                            <input type="number" id="amount" value="100" class="w-full sm:flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 transition-colors duration-200" placeholder="Enter amount">
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                            <label for="from-currency" id="label-from" class="w-full sm:w-auto text-gray-700 font-medium"></label>
+                            <select id="from-currency" class="w-full sm:flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 transition-colors duration-200">
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.5 12a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0z" />
+                            </svg>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                            <label for="to-currency" id="label-to" class="w-full sm:w-auto text-gray-700 font-medium"></label>
+                            <select id="to-currency" class="w-full sm:flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 transition-colors duration-200">
+                            </select>
+                        </div>
+                        <div class="text-center mt-4">
+                            <p id="result" class="text-2xl font-bold text-gray-800"></p>
+                            <p id="last-updated" class="text-sm text-gray-500 mt-1"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </details>
+    </div>
+
+    <script>
+        const languageData = {
+            cn: {
+                pageTitle: 'Priceless London 旅行指南',
+                mainTitle: 'Priceless London',
+                mainSubtitle: '',
+                langButton: 'English',
+                days: [
+                    {
+                        date: '10月7日, 星期二',
+                        title: '抵达与安顿',
+                        content1: '行程始于从伯明翰新街（Birmingham New Street）搭乘<strong>Avanti West Coast</strong>运营的火车前往<strong>伦敦尤斯顿火车站（London Euston）</strong>。最快服务仅需1小时19分钟。',
+                        content2: '抵达伦敦尤斯顿后，搭乘地铁<strong>北线（Northern Line）</strong>前往<strong>老街站（Old Street Station）</strong>，出站后步行即可到达位于 <strong>2 Quaker Street</strong> 的住所。',
+                        content3: '在安顿好行李后，建议以轻松的方式度过第一个傍晚。您的住所离<strong>伦敦塔（Tower of London）</strong>和<strong>伦敦塔桥（Tower Bridge）</strong>非常近，步行即可到达。您可以沿着泰晤士河岸向东漫步，穿过<strong>圣凯瑟琳码头（St. Katharine Docks）</strong>，然后到达<strong>巴特勒码头（Butler\'s Wharf）</strong>。',
+                        tipTitle: '实用提示：',
+                        tip1: '<strong>晚餐推荐：</strong> 在圣凯瑟琳码头的历史酒吧 The Dickens Inn 或巴特勒码头附近的 Wright Brothers 海鲜餐厅。',
+                        tip2: '<strong>伦敦塔开放时间：</strong> 09:00 - 16:30，成人票价£35.80。',
+                        tip3: '<strong>塔桥开放时间：：</strong> 09:30 - 18:00，成人票价£16。'
+                    },
+                    {
+                        date: '10月8日, 星期三',
+                        title: '皇家、购物与公园',
+                        content1: '上午的重点是<strong>白金汉宫卫兵换岗仪式</strong>。建议在10:30分左右抵达，以获得最佳的观赏位置。仪式结束后，可以沿着白金汉门路（Buckingham Gate）步行约15分钟，欣赏<strong>威斯敏斯特教堂</strong>和<strong>国会大厦</strong>的壮丽外观。',
+                        content2: '下午前往<strong>维多利亚和阿尔伯特博物馆（V&A）</strong>。它是世界领先的艺术、设计和表演博物馆，其藏品跨越3000年的历史。随后，从V&A步行约10-15分钟即可到达著名的<strong>哈罗德百货（Harrods）</strong>，可以在这里探索其奢华商品和埃及自动扶梯。',
+                        tipTitle: '实用提示：',
+                        tip1: '<strong>交通：：</strong> 从住宿地乘坐地铁中央线（Central Line）到邦德街站，换乘朱比利线（Jubilee Line）到格林公园站。下午从威斯敏斯特站乘坐区域线（District Line）或环线（Circle Line）到南肯辛顿站。',
+                        tip2: '<strong>V&A：：</strong> 免费开放，建议预留2-3小时。'
+                    },
+                    {
+                        date: '10月9日, 星期四',
+                        title: '文化、学术与戏剧',
+                        content1: '上午前往<strong>大英博物馆</strong>。从住宿地步行至利物浦街站，搭乘地铁<strong>中央线（Central Line）</strong>前往<strong>托特纳姆法院路站（Tottenham Court Road）</strong>，出站后步行即可到达。博物馆的永久藏品免费开放，建议预留3至4个小时。',
+                        content2: '下午，您可以从大英博物馆步行前往<strong>伦敦政治经济学院（LSE）</strong>。随后，前往位于<strong>科芬园（Covent Garden）</strong>的<strong>福伊尔斯书店（Foyles）</strong>，然后穿梭在<strong>Soho</strong>的狭窄街道上，感受都市风情。',
+                        content3: '晚上，您将体验伦敦的重头戏——一场世界级的西区音乐剧。以经久不衰的经典<strong>《歌剧魅影》（The Phantom of the Opera）</strong>为例，该剧在<strong>陛下剧院（His Majesty\'s Theatre）</strong>上演。',
+                        tipTitle: '实用提示：',
+                        tip1: '<strong>购票：：</strong> 您可以通过官方网站、TodayTix或TKTS售票亭寻找折扣票。'
+                    },
+                    {
+                        date: '10月10日, 星期五',
+                        title: '剑桥一日游',
+                        content1: '从<strong>伦敦国王十字车站（London King\'s Cross）</strong>出发，搭乘直达火车前往剑桥，车程通常仅需48分钟，运营商包括Great Northern和Thameslink。您可以使用<strong>分段购票（split ticketing）</strong>策略节省票价。',
+                        content2: '抵达剑桥后，您可以游览著名的<strong>国王学院（King\'s College）</strong>和<strong>三一学院（Trinity College）</strong>，并体验独特的<strong>撑船（punting）</strong>，从水面上欣赏叹息桥（Bridge of Sighs）的景色。',
+                        tipTitle: '实用提示：',
+                        tip1: '<strong>午餐推荐：：</strong> 历史悠久的酒吧 The Eagle，或以经典切尔西小面包（Chelsea Buns）闻名的 Fitzbillies 面包店。'
+                    },
+                    {
+                        date: '10月11日, 星期六',
+                        title: '艺术、美食与水岸',
+                        content1: '上午参观世界顶级的美术馆之一——<strong>国家美术馆（National Gallery）</strong>。它免费向公众开放，建议预留3小时。下午，前往热闹的<strong>博罗市场（Borough Market）</strong>，周六是市场最热闹的时候，是品尝各种地道美食的绝佳地点。',
+                        content2: '享用完美食后，您可以沿着泰晤士河南岸的步道漫步，从Southwark地区向西步行至Waterloo，沿途您将经过<strong>莎士比亚环球剧场（Shakespeare\'s Globe）</strong>和<strong>泰特现代艺术馆（Tate Modern）</strong>等标志性地标。',
+                        tipTitle: '实用提示：',
+                        tip1: '<strong>交通：：</strong> 从住宿地乘坐中央线到查令十字站。前往市场则从查令十字站乘坐朱比利线到伦敦桥站。',
+                        tip2: '<strong>博罗市场美食：：</strong> 推荐 The Ginger Pig 的猪肉卷、Neal\'s Yard Dairy 的芝士，以及 Kappacasein Dairy 的烤芝士三明治。',
+                        tip3: '<strong>冰淇淋：：</strong> 在市场内部的 3bis Gelato 品尝手工意式冰淇淋。'
+                    },
+                    {
+                        date: '10月12日, 星期日',
+                        title: '市场与启程',
+                        content1: '上午，步行前往离住所仅几步之遥的<strong>布里克巷（Brick Lane）市集</strong>。周日的市集最为热闹，充满了复古服装、独立设计师作品、世界各地的街头美食和熙熙攘攘的人群。',
+                        content2: '下午将根据航班时间前往<strong>希思罗机场（Heathrow Airport）T3航站楼</strong>。最便捷的交通方案是利用<strong>伊丽莎白线（Elizabeth Line）</strong>从利物浦街站直达机场，车程约35分钟。',
+                        content3: '您的CX250航班于当天下午18:20起飞。建议您在15:00前离开住所。',
+                        tipTitle: '第6天离境时间表：',
+                        tip1: '<strong>14:00：</strong> 从住宿地出发，步行至利物浦街站。',
+                        tip2: '<strong>14:15：：</strong> 乘坐伊丽莎白线直达希思罗机场。',
+                        tip3: '<strong>14:50：：</strong> 抵达希思罗机场。',
+                        tip4: '<strong>15:20：</strong> 建议办理登机手续。',
+                        tip5: '<strong>16:20：：</strong> 建议通过安检。'
+                    }
+                ],
+                tips: {
+                    title: '财务与实用提示',
+                    content1: '<strong>公共交通：</strong> 伦敦的公共交通网络非常发达。对于大部分旅程，使用非接触式银行卡或移动支付（如Apple Pay、Google Pay）直接在地铁站或巴士上刷卡即可。',
+                    costTitle: '成本节约策略：',
+                    costTip1: '<strong>火车票：：</strong> 提前12周预订，并利用<strong>“分段购票”技巧</strong>。',
+                    costTip2: '<strong>博物馆：：</strong> 提前在线预订免费的定时门票，以节省排队时间。',
+                    costTip3: '<strong>剧院门票：</strong> 灵活利用TKTS售票亭和TodayTix应用来寻找折扣票。',
+                    generalTitle: '一般建议：',
+                    generalTip1: '<strong>导航：</strong> 建议依赖谷歌地图、伦敦交通局（TfL）官方应用等工具进行实时路线规划。',
+                    generalTip2: '<strong>安全：：</strong> 在游览繁忙的旅游区和乘坐公共交通时，需注意保管好个人财物，防范小偷。',
+                    generalTip3: '<strong>着装：：</strong> 10月的伦敦天气多变，建议携带外套和雨具，以应对气温变化和可能的降雨。'
+                },
+                converter: {
+                    title: '汇率计算器',
+                    labelAmount: '金额',
+                    labelFrom: '从',
+                    labelTo: '到',
+                    resultPrefix: '结果:',
+                    lastUpdated: '最后更新于'
+                }
+            },
+            en: {
+                pageTitle: 'Priceless London Travel Guide',
+                mainTitle: 'Priceless London',
+                mainSubtitle: '',
+                langButton: '中文',
+                days: [
+                    {
+                        date: 'October 7, Tuesday',
+                        title: 'Arrival & Settling In',
+                        content1: 'The journey begins by taking the train operated by <strong>Avanti West Coast</strong> from <strong>Birmingham New Street</strong> to <strong>London Euston Station</strong>. The fastest service takes only 1 hour and 19 minutes.',
+                        content2: 'After arriving at London Euston, take the underground <strong>Northern Line</strong> to <strong>Old Street Station</strong>. Your accommodation at <strong>2 Quaker Street</strong> is just a short walk from the station.',
+                        content3: 'After settling your luggage, we recommend spending your first evening in a relaxed manner. Your accommodation is very close to the <strong>Tower of London</strong> and <strong>Tower Bridge</strong>, both within walking distance. You can stroll east along the bank of the River Thames, pass through the beautiful <strong>St. Katharine Docks</strong>, and then arrive at <strong>Butler\'s Wharf</strong>.',
+                        tipTitle: 'Practical Tips:',
+                        tip1: '<strong>Dinner Recommendation:</strong> The historic pub The Dickens Inn at St. Katharine Docks or Wright Brothers seafood restaurant near Butler\'s Wharf.',
+                        tip2: '<strong>Tower of London Hours:</strong> 09:00 - 16:30, adult ticket price £35.80.',
+                        tip3: '<strong>Tower Bridge Hours:</strong> 09:30 - 18:00, adult ticket price £16.'
+                    },
+                    {
+                        date: 'October 8, Wednesday',
+                        title: 'Royalty, Shopping & Parks',
+                        content1: 'The focus of the morning is the <strong>Changing of the Guard at Buckingham Palace</strong>. We suggest arriving around 10:30 am for the best viewing spot. After the ceremony, you can walk for about 15 minutes along Buckingham Gate to admire the magnificent exteriors of <strong>Westminster Abbey</strong> and the <strong>Houses of Parliament</strong>.',
+                        content2: 'In the afternoon, head to the <strong>Victoria and Albert Museum (V&A)</strong>. It is the world\'s leading museum of art, design, and performance, with collections spanning 3,000 years of history. Afterwards, it\'s a 10-15 minute walk from the V&A to the famous <strong>Harrods</strong> department store, where you can explore its luxurious goods and the Egyptian escalator.',
+                        tipTitle: 'Practical Tips:',
+                        tip1: '<strong>Transportation:</strong> From your accommodation, take the Central Line to Bond Street Station, then transfer to the Jubilee Line to Green Park Station. In the afternoon, take the District or Circle Line from Westminster Station to South Kensington Station.',
+                        tip2: '<strong>V&A:</strong> Free admission, it is recommended to allocate 2-3 hours.'
+                    },
+                    {
+                        date: 'October 9, Thursday',
+                        title: 'Culture, Academia & Theatre',
+                        content1: 'In the morning, visit the <strong>British Museum</strong>. Walk from your accommodation to Liverpool Street Station and take the <strong>Central Line</strong> to <strong>Tottenham Court Road</strong>, where the museum is a short walk away. The museum\'s permanent collection is free to the public, and it is recommended to set aside 3-4 hours.',
+                        content2: 'In the afternoon, you can walk from the British Museum to the <strong>London School of Economics (LSE)</strong>. Afterwards, head to <strong>Foyles Bookstore</strong> in <strong>Covent Garden</strong>, then wander through the narrow streets of <strong>Soho</strong> to experience the urban vibe.',
+                        content3: 'In the evening, you will experience a London highlight: a world-class West End musical. For example, the timeless classic <strong>The Phantom of the Opera</strong> is performed at <strong>His Majesty\'s Theatre</strong>.',
+                        tipTitle: 'Practical Tips:',
+                        tip1: '<strong>Tickets:</strong> You can find discounted tickets through official websites, TodayTix, or the TKTS booth.'
+                    },
+                    {
+                        date: 'October 10, Friday',
+                        title: 'Day Trip to Cambridge',
+                        content1: 'From <strong>London King\'s Cross Station</strong>, take a direct train to Cambridge. The journey usually takes only 48 minutes, with operators including Great Northern and Thameslink. You can use a <strong>split ticketing</strong> strategy to save on fare.',
+                        content2: 'Upon arrival in Cambridge, you can visit the famous <strong>King\'s College</strong> and <strong>Trinity College</strong>, and experience the unique <strong>punting</strong>, where you can admire the view of the Bridge of Sighs from the river.',
+                        tipTitle: 'Practical Tips:',
+                        tip1: '<strong>Lunch Recommendation:</strong> The historic pub The Eagle, or the Fitzbillies bakery, famous for its classic Chelsea Buns.'
+                    },
+                    {
+                        date: 'October 11, Saturday',
+                        title: 'Art, Food & Riverside',
+                        content1: 'In the morning, visit one of the world\'s top art galleries, the <strong>National Gallery</strong>. It is free to the public, and it is recommended to set aside 3 hours. In the afternoon, head to the bustling <strong>Borough Market</strong>. Saturday is the market\'s busiest day and a great place to taste a variety of local delicacies.',
+                        content2: 'After enjoying the food, you can stroll along the South Bank walkway of the Thames, walking west from the Southwark area to Waterloo. Along the way, you\'ll pass iconic landmarks such as <strong>Shakespeare\'s Globe Theatre</strong> and the <strong>Tate Modern</strong>.',
+                        tipTitle: 'Practical Tips:',
+                        tip1: '<strong>Transportation:</strong> From your accommodation, take the Central Line to Charing Cross Station. To get to the market, take the Jubilee Line from Charing Cross Station to London Bridge Station.',
+                        tip2: '<strong>Borough Market Food:</strong> Recommendations include the pork roll from The Ginger Pig, cheese from Neal\'s Yard Dairy, and the grilled cheese sandwich from Kappacasein Dairy.',
+                        tip3: '<strong>Ice Cream:</strong> Try the artisanal gelato at 3bis Gelato inside the market.'
+                    },
+                    {
+                        date: 'October 12, Sunday',
+                        title: 'Market & Departure',
+                        content1: 'In the morning, walk to <strong>Brick Lane Market</strong>, just a few steps from your accommodation. The Sunday market is the liveliest, full of vintage clothing, works by independent designers, street food from around the world, and bustling crowds.',
+                        content2: 'In the afternoon, you will head to <strong>Heathrow Airport Terminal 3</strong> based on your flight time. The most convenient transportation is to use the <strong>Elizabeth Line</strong>, which goes directly from Liverpool Street Station to the airport in about 35 minutes.',
+                        content3: 'Your CX250 flight departs at 18:20 that afternoon. It is recommended that you leave your accommodation before 15:00.',
+                        tipTitle: 'Day 6 Departure Schedule:',
+                        tip1: '<strong>14:00：</strong> Leave accommodation and walk to Liverpool Street Station.',
+                        tip2: '<strong>14:15：</strong> Take the Elizabeth Line directly to Heathrow Airport.',
+                        tip3: '<strong>14:50：</strong> Arrive at Heathrow Airport.',
+                        tip4: '<strong>15:20：</strong> Recommended check-in time.',
+                        tip5: '<strong>16:20：</strong> Recommended security check time.'
+                    }
+                ],
+                tips: {
+                    title: 'Financial & Practical Tips',
+                    content1: '<strong>Public Transport:</strong> London\'s public transport network is very well-developed. For most of your journey, you can use a contactless bank card or mobile payment (like Apple Pay, Google Pay) to tap in and out directly at tube stations or on buses.',
+                    costTitle: 'Cost-Saving Strategies:',
+                    costTip1: '<strong>Train Tickets:</strong> Book 12 weeks in advance and utilize the <strong>"split ticketing" trick</strong>.',
+                    costTip2: '<strong>Museums:</strong> Book free timed tickets online in advance to save queuing time.',
+                    costTip3: '<strong>Theatre Tickets:</strong> Flexibly use the TKTS booth and TodayTix app to find discounted tickets.',
+                    generalTitle: 'General Advice:',
+                    generalTip1: '<strong>Navigation:</strong> It is recommended to rely on tools like Google Maps and the official Transport for London (TfL) app for real-time route planning.',
+                    generalTip2: '<strong>Safety:</strong> When visiting busy tourist areas and using public transport, be mindful of your personal belongings to prevent theft.',
+                    generalTip3: '<strong>Attire:</strong> London weather in October is changeable. It is advisable to bring a jacket and rain gear to cope with temperature changes and possible rain.'
+                },
+                converter: {
+                    title: 'Currency Converter',
+                    labelAmount: 'Amount',
+                    labelFrom: 'From',
+                    labelTo: 'To',
+                    resultPrefix: 'Result:',
+                    lastUpdated: 'Last updated on'
+                }
+            }
+        };
+
+        const currencyList = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF", "CNY", "HKD", "NZD"];
+        const exchangeRateApi = "https://open.er-api.com/v6/latest/";
+        let exchangeRates = {};
+
+        const amountInput = document.getElementById('amount');
+        const fromCurrencySelect = document.getElementById('from-currency');
+        const toCurrencySelect = document.getElementById('to-currency');
+        const resultDisplay = document.getElementById('result');
+        const lastUpdatedDisplay = document.getElementById('last-updated');
+
+        let currentLang = 'cn';
+
+        const updateContent = (lang) => {
+            const data = languageData[lang];
+            
+            // Update page title and main headings
+            document.getElementById('page-title').textContent = data.pageTitle;
+            document.getElementById('main-title').textContent = data.mainTitle;
+            document.getElementById('main-subtitle').textContent = data.mainSubtitle;
+            document.getElementById('lang-toggle-button').textContent = data.langButton;
+
+            // Update day cards
+            data.days.forEach((dayData, index) => {
+                const day = index + 1;
+                document.getElementById(`day-${day}-date`).textContent = dayData.date;
+                document.getElementById(`day-${day}-title`).textContent = dayData.title;
+                document.getElementById(`day-${day}-content-1`).innerHTML = dayData.content1;
+                if (dayData.content2) document.getElementById(`day-${day}-content-2`).innerHTML = dayData.content2;
+                if (dayData.content3) document.getElementById(`day-${day}-content-3`).innerHTML = dayData.content3;
+                document.getElementById(`day-${day}-tip-title`).textContent = dayData.tipTitle;
+                if (dayData.tip1) document.getElementById(`day-${day}-tip-1`).innerHTML = dayData.tip1;
+                if (dayData.tip2) document.getElementById(`day-${day}-tip-2`).innerHTML = dayData.tip2;
+                if (dayData.tip3) document.getElementById(`day-${day}-tip-3`).innerHTML = dayData.tip3;
+                if (dayData.tip4) document.getElementById(`day-${day}-tip-4`).innerHTML = dayData.tip4;
+                if (dayData.tip5) document.getElementById(`day-${day}-tip-5`).innerHTML = dayData.tip5;
+            });
+
+            // Update tips section
+            document.getElementById('tips-title').textContent = data.tips.title;
+            document.getElementById('tips-content-1').innerHTML = data.tips.content1;
+            document.getElementById('cost-tips-title').textContent = data.tips.costTitle;
+            document.getElementById('cost-tip-1').innerHTML = data.tips.costTip1;
+            document.getElementById('cost-tip-2').innerHTML = data.tips.costTip2;
+            document.getElementById('cost-tip-3').innerHTML = data.tips.costTip3;
+            document.getElementById('general-tips-title').textContent = data.tips.generalTitle;
+            document.getElementById('general-tip-1').innerHTML = data.tips.generalTip1;
+            document.getElementById('general-tip-2').innerHTML = data.tips.generalTip2;
+            document.getElementById('general-tip-3').innerHTML = data.tips.generalTip3;
+
+            // Update converter section
+            document.getElementById('converter-title').textContent = data.converter.title;
+            document.getElementById('label-amount').textContent = data.converter.labelAmount;
+            document.getElementById('label-from').textContent = data.converter.labelFrom;
+            document.getElementById('label-to').textContent = data.converter.labelTo;
+            updateResultDisplay();
+        };
+
+        const fetchExchangeRates = async () => {
+            try {
+                const response = await fetch(exchangeRateApi + 'USD');
+                const data = await response.json();
+                exchangeRates = data.rates;
+                lastUpdatedDisplay.textContent = `${languageData[currentLang].converter.lastUpdated} ${new Date().toLocaleDateString()}`;
+                populateCurrencies();
+                convertCurrency();
+            } catch (error) {
+                console.error("Error fetching exchange rates:", error);
+                resultDisplay.textContent = '无法加载汇率数据。';
+                if (currentLang === 'en') {
+                    resultDisplay.textContent = 'Unable to load exchange rate data.';
+                }
+            }
+        };
+
+        const populateCurrencies = () => {
+            fromCurrencySelect.innerHTML = '';
+            toCurrencySelect.innerHTML = '';
+            currencyList.forEach(currency => {
+                const fromOption = new Option(currency, currency);
+                fromCurrencySelect.add(fromOption);
+                const toOption = new Option(currency, currency);
+                toCurrencySelect.add(toOption);
+            });
+            // Set default currencies
+            fromCurrencySelect.value = 'GBP';
+            toCurrencySelect.value = 'CNY';
+        };
+
+        const convertCurrency = () => {
+            const amount = parseFloat(amountInput.value);
+            const fromCurrency = fromCurrencySelect.value;
+            const toCurrency = toCurrencySelect.value;
+
+            if (isNaN(amount) || !fromCurrency || !toCurrency) {
+                resultDisplay.textContent = '';
+                return;
+            }
+
+            const rateFrom = exchangeRates[fromCurrency];
+            const rateTo = exchangeRates[toCurrency];
+
+            if (rateFrom && rateTo) {
+                const convertedAmount = (amount / rateFrom) * rateTo;
+                const formattedResult = convertedAmount.toFixed(2);
+                const resultText = `${languageData[currentLang].converter.resultPrefix} ${formattedResult} ${toCurrency}`;
+                resultDisplay.textContent = resultText;
+            } else {
+                resultDisplay.textContent = '无效货币代码。';
+                if (currentLang === 'en') {
+                    resultDisplay.textContent = 'Invalid currency code.';
+                }
+            }
+        };
+
+        const updateResultDisplay = () => {
+            const amount = parseFloat(amountInput.value);
+            const fromCurrency = fromCurrencySelect.value;
+            const toCurrency = toCurrencySelect.value;
+            if (isNaN(amount) || !fromCurrency || !toCurrency) {
+                resultDisplay.textContent = '';
+                return;
+            }
+            const rateFrom = exchangeRates[fromCurrency];
+            const rateTo = exchangeRates[toCurrency];
+            if (rateFrom && rateTo) {
+                const convertedAmount = (amount / rateFrom) * rateTo;
+                const formattedResult = convertedAmount.toFixed(2);
+                const resultText = `${languageData[currentLang].converter.resultPrefix} ${formattedResult} ${toCurrency}`;
+                resultDisplay.textContent = resultText;
+            } else {
+                resultDisplay.textContent = '无法计算。';
+                if (currentLang === 'en') {
+                    resultDisplay.textContent = 'Cannot calculate.';
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const langButton = document.getElementById('lang-toggle-button');
+            langButton.addEventListener('click', () => {
+                currentLang = currentLang === 'cn' ? 'en' : 'cn';
+                updateContent(currentLang);
+                updateResultDisplay();
+            });
+
+            // Add event listeners for the converter
+            amountInput.addEventListener('input', convertCurrency);
+            fromCurrencySelect.addEventListener('change', convertCurrency);
+            toCurrencySelect.addEventListener('change', convertCurrency);
+
+            // Initial content load
+            updateContent(currentLang);
+            fetchExchangeRates();
+        });
+    </script>
+</body>
+</html>
