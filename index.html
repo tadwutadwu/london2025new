@@ -136,78 +136,25 @@
             </div>
         </div>
 
-        <!-- 地图和自定义行程部分 -->
+        <!-- 地图部分 -->
         <div class="mt-12 p-8 bg-gray-100 rounded-xl shadow-xl">
             <h2 id="mapTitle" class="text-2xl font-bold text-gray-900 text-center mb-6">交互式行程地图</h2>
             <div id="map"></div>
             <div class="mt-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                 <button id="getUserLocation" class="bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-gray-800 transition-colors duration-300 flex-grow">获取我的位置</button>
             </div>
-            
-            <h3 id="addTripTitle" class="text-xl font-bold text-gray-900 mt-8 mb-4">添加自定义行程</h3>
-            <div class="flex flex-col space-y-4">
-                <input type="text" id="customLocationName" placeholder="行程名称 (例如: XX书店)" class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <div class="flex space-x-4">
-                    <input type="text" id="customLat" placeholder="纬度 (Lat)" class="p-3 rounded-lg border border-gray-300 w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <input type="text" id="customLon" placeholder="经度 (Lon)" class="p-3 rounded-lg border border-gray-300 w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
-                <button id="addCustomLocation" class="bg-indigo-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-600 transition-colors duration-300">添加行程</button>
-            </div>
         </div>
     </div>
-    <p id="userIdDisplay" class="mt-8 text-center text-xs text-gray-500"></p>
 
     <!-- 引入 Leaflet JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     
-    <!-- Firebase SDK Imports -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, doc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        setLogLevel('debug');
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db, auth, userId = null;
-        let isAuthReady = false;
+    <script>
         let map;
-        let customLocationsMarkers;
         let activeMarkers = [];
         let routePolyline = null;
         let userLocationMarker = null;
 
-        async function initFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        document.getElementById('userIdDisplay').textContent = `您的用户ID (用于共享): ${userId}`;
-                        isAuthReady = true;
-                        setupFirestoreListeners();
-                    } else {
-                        try {
-                            if (initialAuthToken) {
-                                await signInWithCustomToken(auth, initialAuthToken);
-                            } else {
-                                await signInAnonymously(auth);
-                            }
-                        } catch (error) {
-                            console.error("Firebase Auth Error:", error);
-                        }
-                    }
-                });
-            } catch (error) {
-                console.error("Firebase Initialization Error:", error);
-            }
-        }
-        
         const iternaryLocations = {
             day1: [
                 { name: '伦敦尤斯顿火车站', coords: [51.5284, -0.1332] },
@@ -277,25 +224,9 @@
             if (latLngs.length > 0) {
                 map.fitBounds(L.latLngBounds(latLngs).pad(0.5));
             }
-            customLocationsMarkers.addTo(map);
         }
 
-        function setupFirestoreListeners() {
-            if (!isAuthReady) return;
-            const customLocationsColRef = collection(db, `artifacts/${appId}/users/${userId}/custom_locations`);
-            onSnapshot(customLocationsColRef, (snapshot) => {
-                customLocationsMarkers.clearLayers();
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const marker = L.marker([data.lat, data.lon]).addTo(customLocationsMarkers)
-                        .bindPopup(`<b>${data.name}</b> (您的行程)`);
-                });
-            }, (error) => {
-                console.error("Error listening to custom locations:", error);
-            });
-        }
-
-        window.onload = async () => {
+        window.onload = () => {
             if (typeof L === 'undefined' || typeof L.map !== 'function') {
                 console.error("Leaflet library is not fully loaded.");
                 return;
@@ -305,7 +236,6 @@
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
-            customLocationsMarkers = L.layerGroup().addTo(map);
 
             const langData = {
                 'zh': {
@@ -415,13 +345,7 @@
                     gbpLabel: "英镑 (GBP)",
                     cnyLabel: "人民币 (CNY)",
                     mapTitle: "交互式行程地图",
-                    addTripTitle: "添加自定义行程",
-                    customLocationNamePlaceholder: "行程名称 (例如: XX书店)",
-                    customLatPlaceholder: "纬度 (Lat)",
-                    customLonPlaceholder: "经度 (Lon)",
-                    addCustomLocationButton: "添加行程",
-                    getUserLocationButton: "获取我的位置",
-                    userIdDisplay: "您的用户ID (用于共享): "
+                    getUserLocationButton: "获取我的位置"
                 },
                 'en': {
                     pageTitle: "Priceless Journey in London",
@@ -468,7 +392,7 @@
                                 <li><strong>Transportation:</strong> Take the Central Line tube from Liverpool Street Station to Tottenham Court Road Station.</li>
                                 <li><strong>Activity:</strong> Visit the British Museum to explore its world-class collection, such as the Rosetta Stone and Egyptian mummies (free admission, booking a free timed ticket online is recommended).</li>
                             </ul>
-                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: West End Exploration</h3>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：西区深度探索</h3>
                             <ul class="list-disc list-inside space-y-2">
                                 <li><strong>Activity:</strong> Walk from the British Museum to explore the London School of Economics (LSE), then enjoy some reading time at Foyles bookstore in Covent Garden, and finally take a leisurely stroll through the vibrant Soho area.</li>
                             </ul>
@@ -485,7 +409,7 @@
                             </ul>
                             <h3 class="font-bold text-lg mt-4 mb-2">下午：剑桥探索</h3>
                             <ul class="list-disc list-inside space-y-2">
-                                <li><strong>活动：</strong>Upon arrival in Cambridge, you can walk to visit the famous colleges, King's College and Trinity College. You can also opt for a Punting tour on the River Cam to experience the unique college scenery.</li>
+                                <li><strong>Activity:</strong>Upon arrival in Cambridge, you can walk to visit the famous colleges, King's College and Trinity College. You can also opt for a Punting tour on the River Cam to experience the unique college scenery.</li>
                             </ul>
                             <h3 class="font-bold text-lg mt-4 mb-2">Evening: Return to London and Dinner</h3>
                             <ul class="list-disc list-inside space-y-2">
@@ -530,13 +454,7 @@
                     gbpLabel: "Pounds (GBP)",
                     cnyLabel: "Yuan (CNY)",
                     mapTitle: "Interactive Itinerary Map",
-                    addTripTitle: "Add Custom Trip",
-                    customLocationNamePlaceholder: "Trip Name (e.g., XX Bookstore)",
-                    customLatPlaceholder: "Latitude (Lat)",
-                    customLonPlaceholder: "Longitude (Lon)",
-                    addCustomLocationButton: "Add Trip",
-                    getUserLocationButton: "Get My Location",
-                    userIdDisplay: "Your User ID (for sharing): "
+                    getUserLocationButton: "Get My Location"
                 }
             };
             let currentLang = 'zh';
@@ -549,11 +467,6 @@
                 document.getElementById('gbpLabel').textContent = data.gbpLabel;
                 document.getElementById('cnyLabel').textContent = data.cnyLabel;
                 document.getElementById('mapTitle').textContent = data.mapTitle;
-                document.getElementById('addTripTitle').textContent = data.addTripTitle;
-                document.getElementById('customLocationName').placeholder = data.customLocationNamePlaceholder;
-                document.getElementById('customLat').placeholder = data.customLatPlaceholder;
-                document.getElementById('customLon').placeholder = data.customLonPlaceholder;
-                document.getElementById('addCustomLocation').textContent = data.addCustomLocationButton;
                 document.getElementById('getUserLocation').textContent = data.getUserLocationButton;
                 document.getElementById('mainTitle').textContent = data.pageTitle;
 
@@ -646,38 +559,6 @@
                     alert("您的浏览器不支持地理位置功能。");
                 }
             });
-
-            // 添加自定义行程
-            document.getElementById('addCustomLocation').addEventListener('click', async () => {
-                const name = document.getElementById('customLocationName').value;
-                const lat = parseFloat(document.getElementById('customLat').value);
-                const lon = parseFloat(document.getElementById('customLon').value);
-                
-                if (name && !isNaN(lat) && !isNaN(lon) && isAuthReady) {
-                    try {
-                        const customLocationsColRef = collection(db, `artifacts/${appId}/users/${userId}/custom_locations`);
-                        await addDoc(customLocationsColRef, {
-                            name: name,
-                            lat: lat,
-                            lon: lon,
-                            createdAt: new Date()
-                        });
-                        document.getElementById('customLocationName').value = '';
-                        document.getElementById('customLat').value = '';
-                        document.getElementById('customLon').value = '';
-                    } catch (e) {
-                        console.error("添加自定义行程失败:", e);
-                    }
-                } else {
-                    if (!isAuthReady) {
-                        console.error("Firebase未就绪，无法添加行程。");
-                    } else {
-                        console.error("请输入有效的行程名称、纬度和经度。");
-                    }
-                }
-            });
-
-            initFirebase();
         };
     </script>
 </body>
