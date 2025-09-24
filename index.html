@@ -42,18 +42,57 @@
             border-radius: 1rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+        /* 更新: 移除绝对定位，让它在文档流中正常显示 */
+        #weather-widget {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 150px;
+            margin: 2rem auto; /* 居中并增加边距 */
+        }
+        .weather-temp {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e40af;
+        }
+        .weather-city {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        .weather-desc {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+        .weather-icon {
+            width: 50px;
+            height: 50px;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 flex flex-col items-center">
 
     <div class="max-w-4xl w-full space-y-6">
-
         <!-- 标题和语言切换 -->
         <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 mb-10">
             <h1 id="pageTitle" class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mt-4">Priceless Journey in London</h1>
             <button id="langToggle" class="bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-gray-800 transition-colors duration-300">中/EN</button>
         </div>
         <p id="subTitle" class="text-center text-lg text-gray-600 mb-8"></p>
+
+        <!-- 天气卡片已调整位置，不再遮挡内容 -->
+        <div id="weather-widget">
+            <h2 id="weatherCity" class="weather-city">正在获取天气...</h2>
+            <img id="weatherIcon" class="weather-icon" alt="Weather icon">
+            <div id="weatherTemp" class="weather-temp"></div>
+            <div id="weatherDesc" class="weather-desc"></div>
+        </div>
 
         <!-- 行程卡片列表 -->
         <div id="itinerary-cards" class="space-y-4">
@@ -155,6 +194,8 @@
         let routePolyline = null;
         let userLocationMarker = null;
 
+        const OPENWEATHERMAP_API_KEY = "bbcb223b88963d2e9d18d776b2c8d12e";
+
         const iternaryLocations = {
             day1: [
                 { name: '伦敦尤斯顿火车站', coords: [51.5284, -0.1332] },
@@ -240,7 +281,7 @@
             const langData = {
                 'zh': {
                     pageTitle: "无价伦敦之旅",
-                    subTitle: "",
+                    subTitle: "您的独家行程，从伯明翰到希思罗。",
                     days: [
                         { title: "第一天：10月7日, 星期二", subtitle: "从伯明翰出发，抵达伦敦，并在泰晤士河畔漫步。", details: `
                             <h3 class="font-bold text-lg mb-2">上午至下午：从伯明翰到伦敦</h3>
@@ -274,7 +315,7 @@
                             </ul>
                             <h3 class="font-bold text-lg mt-4 mb-2">晚餐</h3>
                             <ul class="list-disc list-inside space-y-2">
-                                <li><strong>推荐餐厅：</strong>Burger and Lobster (骑士桥店)，位于哈罗德百货对面。强烈建议提前预订以确保有位。</li>
+                                <li><strong>推荐餐厅：：</strong>Burger and Lobster (骑士桥店)，位于哈罗德百货对面。强烈建议提前预订以确保有位。</li>
                             </ul>
                         `},
                         { title: "第三天：10月9日, 星期四", subtitle: "大英博物馆文化之旅，并在夜晚欣赏伦敦西区的音乐剧。", details: `
@@ -290,7 +331,7 @@
                             <h3 class="font-bold text-lg mt-4 mb-2">夜晚：音乐剧与晚餐</h3>
                             <ul class="list-disc list-inside space-y-2">
                                 <li><strong>活动：</strong>在西区剧院欣赏经典剧目 《歌剧魅影》。建议通过官网或 TodayTix 等应用提前订票。</li>
-                                <li><strong>晚餐推荐：</strong>在科芬园或 Soho 区附近选择一家餐厅。</li>
+                                <li><strong>晚餐推荐：：</strong>在科芬园或 Soho 区附近选择一家餐厅。</li>
                             </ul>
                         `},
                         { title: "第四天：10月10日, 星期五", subtitle: "前往剑桥感受学术氛围，晚上享用日式烤串。", details: `
@@ -320,7 +361,7 @@
                             </ul>
                             <h3 class="font-bold text-lg mt-4 mb-2">下午：泰晤士河南岸</h3>
                             <ul class="list-disc list-inside space-y-2">
-                                <li><strong>交通方式：</strong>从伦敦桥步行即可到达。</li>
+                                <li><strong>交通方式：</strong>It's a short walk from London Bridge.</li>
                                 <li><strong>活动：</strong>在泰晤士河南岸，您可以参观 莎士比亚环球剧场 (Shakespeare's Globe) 和 泰特现代艺术馆 (Tate Modern)，感受伦敦的艺术气息。</li>
                             </ul>
                             <h3 class="font-bold text-lg mt-4 mb-2">晚餐</h3>
@@ -345,7 +386,7 @@
                     gbpLabel: "英镑 (GBP)",
                     cnyLabel: "人民币 (CNY)",
                     mapTitle: "交互式行程地图",
-                    getUserLocationButton: "获取我的位置"
+                    getUserLocationButton: "获取我的位置",
                 },
                 'en': {
                     pageTitle: "Priceless Journey in London",
@@ -392,7 +433,7 @@
                                 <li><strong>Transportation:</strong> Take the Central Line tube from Liverpool Street Station to Tottenham Court Road Station.</li>
                                 <li><strong>Activity:</strong> Visit the British Museum to explore its world-class collection, such as the Rosetta Stone and Egyptian mummies (free admission, booking a free timed ticket online is recommended).</li>
                             </ul>
-                            <h3 class="font-bold text-lg mt-4 mb-2">下午：西区深度探索</h3>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: West End Exploration</h3>
                             <ul class="list-disc list-inside space-y-2">
                                 <li><strong>Activity:</strong> Walk from the British Museum to explore the London School of Economics (LSE), then enjoy some reading time at Foyles bookstore in Covent Garden, and finally take a leisurely stroll through the vibrant Soho area.</li>
                             </ul>
@@ -407,7 +448,7 @@
                             <ul class="list-disc list-inside space-y-2">
                                 <li><strong>Transportation:</strong> Take a train from London King's Cross Station to Cambridge, a journey of about 48 minutes. Again, booking tickets in advance and using "Split Ticketing" can save money.</li>
                             </ul>
-                            <h3 class="font-bold text-lg mt-4 mb-2">下午：剑桥探索</h3>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: Cambridge Exploration</h3>
                             <ul class="list-disc list-inside space-y-2">
                                 <li><strong>Activity:</strong>Upon arrival in Cambridge, you can walk to visit the famous colleges, King's College and Trinity College. You can also opt for a Punting tour on the River Cam to experience the unique college scenery.</li>
                             </ul>
@@ -441,9 +482,9 @@
                             <h3 class="font-bold text-lg mb-2">Morning: Brick Lane Market</h3>
                             <ul class="list-disc list-inside space-y-2">
                                 <li><strong>Transportation:</strong> It's a short walk from your accommodation.</li>
-                                <li><strong>Activity:</strong> Explore Brick Lane Market for vintage clothes, antiques, and street art. It's a vibrant area where you can buy unique souvenirs.</li>
+                                <li><strong>Activity：</strong>探索 布里克巷市集 (Brick Lane Market) 的二手服饰、古董和街头艺术。这是一个充满活力的地区，可以购买一些独特的纪念品。</li>
                             </ul>
-                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: Travel to Airport</h3>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: Travel to the Airport</h3>
                             <ul class="list-disc list-inside space-y-2">
                                 <li><strong>Transportation:</strong> Take the tube from Old Street Station to Heathrow Airport, or take the Heathrow Express from Euston Station to get there.</li>
                                 <li><strong>Activity:</strong> Head to the airport to prepare for your return flight.</li>
@@ -454,7 +495,7 @@
                     gbpLabel: "Pounds (GBP)",
                     cnyLabel: "Yuan (CNY)",
                     mapTitle: "Interactive Itinerary Map",
-                    getUserLocationButton: "Get My Location"
+                    getUserLocationButton: "Get My Location",
                 }
             };
             let currentLang = 'zh';
@@ -479,12 +520,12 @@
                 });
             }
 
-            // 加载中文UI
             updateUI('zh');
 
             document.getElementById('langToggle').addEventListener('click', () => {
                 currentLang = currentLang === 'zh' ? 'en' : 'zh';
                 updateUI(currentLang);
+                fetchWeather();
             });
 
             // 展开/收起卡片功能
@@ -494,14 +535,12 @@
                     const dayId = card.dataset.day;
                     const isOpen = card.classList.contains('open');
 
-                    // 关闭所有其他卡片
                     document.querySelectorAll('.card-container').forEach(c => {
                         if (c !== card) {
                             c.classList.remove('open');
                         }
                     });
 
-                    // 切换当前卡片
                     card.classList.toggle('open');
                     if (card.classList.contains('open')) {
                         showLocationsOnMap(dayId);
@@ -559,6 +598,82 @@
                     alert("您的浏览器不支持地理位置功能。");
                 }
             });
+
+            // 天气功能
+            function getWeather(lat, lon, lang) {
+                const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHERMAP_API_KEY}&units=metric&lang=${lang}`;
+                
+                const weatherCity = document.getElementById('weatherCity');
+                const weatherIcon = document.getElementById('weatherIcon');
+                const weatherTemp = document.getElementById('weatherTemp');
+                const weatherDesc = document.getElementById('weatherDesc');
+
+                weatherCity.textContent = (lang === 'zh') ? "获取中..." : "Loading...";
+                weatherIcon.src = '';
+                weatherTemp.textContent = '';
+                weatherDesc.textContent = '';
+
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Weather data not available.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const temp = data.main.temp;
+                        const description = data.weather[0].description;
+                        const cityName = data.name;
+                        const iconCode = data.weather[0].icon;
+                        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                        
+                        weatherCity.textContent = cityName;
+                        weatherIcon.src = iconUrl;
+                        weatherIcon.alt = description;
+                        weatherTemp.textContent = `${Math.round(temp)}°C`;
+                        weatherDesc.textContent = description;
+                    })
+                    .catch(error => {
+                        console.error("Error fetching weather:", error);
+                        weatherCity.textContent = (lang === 'zh') ? "无法获取" : "Not available";
+                        weatherIcon.src = '';
+                        weatherTemp.textContent = '';
+                        weatherDesc.textContent = '';
+                    });
+            }
+
+            function fetchWeather() {
+                if ('geolocation' in navigator) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const { latitude, longitude } = position.coords;
+                            getWeather(latitude, longitude, currentLang);
+                        },
+                        (error) => {
+                            // 在错误回调中添加更详细的日志
+                            console.error("Geolocation failed:", error);
+                            if (error.code === error.PERMISSION_DENIED) {
+                                console.error("用户拒绝了位置权限。");
+                            } else if (error.code === error.POSITION_UNAVAILABLE) {
+                                console.error("位置信息不可用。");
+                            } else if (error.code === error.TIMEOUT) {
+                                console.error("获取位置超时。");
+                            } else {
+                                console.error("发生未知地理位置错误。");
+                            }
+                            // 如果地理位置失败，回退到伦敦坐标
+                            getWeather(51.5074, -0.1278, currentLang);
+                        }
+                    );
+                } else {
+                    // 如果浏览器不支持地理位置，回退到伦敦坐标
+                    console.warn("浏览器不支持地理位置API，回退到默认城市。");
+                    getWeather(51.5074, -0.1278, currentLang);
+                }
+            }
+
+            // 初始加载天气
+            fetchWeather();
         };
     </script>
 </body>
