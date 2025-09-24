@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <li><b>Stroll:</b> Walk west along the South Bank from Southwark to Waterloo, passing Shakespeare's Globe and Tate Modern.</li>
                         </ul>
                          <h4 class="font-bold mb-2">Dinner Reservation:</h4>
-                        <p><b>Blacklock Shoreditch</b>, Oct 11, 19:45, 3 people (Confirmed, Confirmation #: 2109994835)</p>
+                        <p><b>Blacklock Shoreditch</b>, 10月11日, 19:45, 3 people (Confirmed, Confirmation #: 2109994835)</p>
                     `
                 },
                 {
@@ -321,16 +321,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: "Market & Departure",
                     summary: "Experience the multicultural vibe at East London's liveliest market before heading to the airport to conclude your trip.",
                     details: `
-                        <h4 class="font-bold mb-2">Morning: 布里克巷市集</h4>
+                        <h4 class="font-bold mb-2">Morning: Brick Lane Market</h4>
                         <ul class="list-disc list-inside mb-4 space-y-1">
-                            <li><b>交通:</b> 从您的住所步行即可到达，非常便利。</li>
-                            <li><b>亮点:</b> 周日的布里克巷(Brick Lane)市集最为热闹，充满了复古服饰、独立设计和世界各地的街头美食。</li>
-                            <li><b>美食推荐:</b> 务必尝试Beigel Bake的咸牛肉贝果和地道的孟加拉国咖喱。</li>
+                            <li><b>Transport:</b> A convenient walk from your accommodation.</li>
+                            <li><b>Highlights:</b> The Brick Lane market is most vibrant on Sundays, filled with vintage clothes, independent designs, and street food from all over the world.</li>
+                            <li><b>Food Recommendations:</b> Don't miss the salt beef bagel from Beigel Bake and authentic Bangladeshi curry.</li>
                         </ul>
-                        <h4 class="font-bold mb-2">下午活动: 前往机场</h4>
+                        <h4 class="font-bold mb-2">Afternoon: Head to the Airport</h4>
                         <ul class="list-disc list-inside mb-4 space-y-1">
-                            <li><b>时间规划:</b> 您的航班CX250于18:20从希思罗机场T3航站楼起飞。建议最晚于15:00从住所出发。</li>
-                            <li><b>交通:</b> 从利物浦街站乘坐伊丽莎白线(Elizabeth Line)直达希思罗机场 (约35分钟)。</li>
+                            <li><b>Time Management:</b> Your flight CX250 departs from Heathrow Terminal 3 at 18:20. It's recommended to leave your accommodation by 15:00 at the latest.</li>
+                            <li><b>Transport:</b> Take the Elizabeth Line directly from Liverpool Street Station to Heathrow Airport (approx. 35 minutes).</li>
                         </ul>
                     `
                 },
@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createDayCard(day, index) {
         const bgColor = getRandomColor();
-        const textColor = (index === 0 || index === 1 || index === 3 || index === 4) ? 'white' : getTextColor(bgColor);
+        const textColor = (index % 2 === 0) ? '#FFFFFF' : '#333333'; // Alternating colors for better readability and a clean look
 
         const card = document.createElement('div');
         card.className = "card rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer";
