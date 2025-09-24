@@ -1,205 +1,565 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>Priceless Journey in London</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f6f8;
-      color: #333;
-    }
-    header {
-      background: #1e3c72;
-      color: #fff;
-      text-align: center;
-      padding: 1.5em 1em;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.8em;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 1.5em;
-    }
-    .day-itinerary {
-      background: #fff;
-      border-radius: 12px;
-      padding: 1.2em;
-      margin-bottom: 1.5em;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .day-itinerary h3 {
-      margin-top: 0;
-      color: #1e3c72;
-    }
-    textarea {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      padding: 0.5em;
-      font-size: 1em;
-      resize: vertical;
-    }
-    button {
-      background: #1e3c72;
-      color: #fff;
-      border: none;
-      padding: 0.6em 1.2em;
-      margin-top: 0.5em;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #274b91;
-    }
-    .weather {
-      margin: 0.5em 0 1em;
-      font-weight: bold;
-    }
-    img.weather-icon {
-      vertical-align: middle;
-      margin-right: 6px;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Priceless Journey in London</h1>
-    <p>行程安排 · 天气预报 · 我的旅行笔记</p>
-  </header>
-
-  <div class="container">
-    <!-- Day 1 ~ Day 6 行程卡片 -->
-    <div class="day-itinerary" data-day="1">
-      <h3>Day 1: 抵达伦敦</h3>
-      <p>行程：抵达希思罗 → 酒店入住 → 泰晤士河夜景</p>
-      <h4>天气预报</h4>
-      <p id="weather-day-1" class="weather">加载中...</p>
-      <h4>我的记录</h4>
-      <textarea id="note-day-1" rows="4" placeholder="写下今天的感受或提醒..."></textarea>
-      <button onclick="saveNote(1)">保存</button>
-      <p><strong>已保存记录:</strong> <span id="saved-note-day-1"></span></p>
-    </div>
-
-    <div class="day-itinerary" data-day="2">
-      <h3>Day 2: 探索伦敦市区</h3>
-      <p>行程：大英博物馆 → 牛津街购物 → 西区剧院</p>
-      <h4>天气预报</h4>
-      <p id="weather-day-2" class="weather">加载中...</p>
-      <h4>我的记录</h4>
-      <textarea id="note-day-2" rows="4" placeholder="写下今天的感受或提醒..."></textarea>
-      <button onclick="saveNote(2)">保存</button>
-      <p><strong>已保存记录:</strong> <span id="saved-note-day-2"></span></p>
-    </div>
-
-    <div class="day-itinerary" data-day="3">
-      <h3>Day 3: 温莎一日游</h3>
-      <p>行程：温莎城堡 → 泰晤士小镇</p>
-      <h4>天气预报</h4>
-      <p id="weather-day-3" class="weather">加载中...</p>
-      <h4>我的记录</h4>
-      <textarea id="note-day-3" rows="4" placeholder="写下今天的感受或提醒..."></textarea>
-      <button onclick="saveNote(3)">保存</button>
-      <p><strong>已保存记录:</strong> <span id="saved-note-day-3"></span></p>
-    </div>
-
-    <div class="day-itinerary" data-day="4">
-      <h3>Day 4: 剑桥文化之旅</h3>
-      <p>行程：剑桥大学 → 康河泛舟</p>
-      <h4>天气预报</h4>
-      <p id="weather-day-4" class="weather">加载中...</p>
-      <h4>我的记录</h4>
-      <textarea id="note-day-4" rows="4" placeholder="写下今天的感受或提醒..."></textarea>
-      <button onclick="saveNote(4)">保存</button>
-      <p><strong>已保存记录:</strong> <span id="saved-note-day-4"></span></p>
-    </div>
-
-    <div class="day-itinerary" data-day="5">
-      <h3>Day 5: 牛津学术之旅</h3>
-      <p>行程：牛津大学 → 博德利图书馆 → 小镇漫步</p>
-      <h4>天气预报</h4>
-      <p id="weather-day-5" class="weather">加载中...</p>
-      <h4>我的记录</h4>
-      <textarea id="note-day-5" rows="4" placeholder="写下今天的感受或提醒..."></textarea>
-      <button onclick="saveNote(5)">保存</button>
-      <p><strong>已保存记录:</strong> <span id="saved-note-day-5"></span></p>
-    </div>
-
-    <div class="day-itinerary" data-day="6">
-      <h3>Day 6: 自由活动 & 返程</h3>
-      <p>行程：自由购物 → 返程机场</p>
-      <h4>天气预报</h4>
-      <p id="weather-day-6" class="weather">加载中...</p>
-      <h4>我的记录</h4>
-      <textarea id="note-day-6" rows="4" placeholder="写下今天的感受或提醒..."></textarea>
-      <button onclick="saveNote(6)">保存</button>
-      <p><strong>已保存记录:</strong> <span id="saved-note-day-6"></span></p>
-    </div>
-  </div>
-
-  <script>
-    /* ========= 小记事本功能 ========= */
-    function saveNote(day) {
-      const text = document.getElementById(`note-day-${day}`).value;
-      localStorage.setItem(`note-day-${day}`, text);
-      document.getElementById(`saved-note-day-${day}`).textContent = text;
-    }
-
-    // 页面加载时恢复记录
-    window.onload = function() {
-      document.querySelectorAll('.day-itinerary').forEach(div => {
-        const day = div.dataset.day;
-        const saved = localStorage.getItem(`note-day-${day}`);
-        if (saved) {
-          document.getElementById(`note-day-${day}`).value = saved;
-          document.getElementById(`saved-note-day-${day}`).textContent = saved;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="mainTitle">Priceless Journey in London</title>
+    <!-- 引入 Inter 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            min-height: 100vh;
         }
-      });
-      loadWeather();
-    };
+        .card-container {
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+            overflow: hidden;
+            max-height: 10rem; /* Initial height for closed state */
+        }
+        .card-container.open {
+            max-height: 1000px; /* Maximum height for open state */
+        }
+        .card-header {
+            cursor: pointer;
+            position: relative;
+        }
+        .chevron {
+            transition: transform 0.4s ease-in-out;
+        }
+        .card-container.open .chevron {
+            transform: rotate(180deg);
+        }
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex flex-col items-center">
 
-    /* ========= 天气预报功能 ========= */
-    async function loadWeather() {
-      const apiKey = "bbcb223b88963d2e9d18d776b2c8d12e"; // 你的 API Key
-      const city = "London,UK";
+    <div class="max-w-4xl w-full space-y-6">
 
-      const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=zh_cn`;
+        <!-- 标题和语言切换 -->
+        <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 mb-10">
+            <h1 id="pageTitle" class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mt-4">Priceless Journey in London</h1>
+            <button id="langToggle" class="bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-gray-800 transition-colors duration-300">中/EN</button>
+        </div>
+        <p id="subTitle" class="text-center text-lg text-gray-600 mb-8"></p>
 
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
+        <!-- 行程卡片列表 -->
+        <div id="itinerary-cards" class="space-y-4">
+            <!-- 预定义的行程卡片，内容由 JS 填充 -->
+            <div class="card-container bg-emerald-500 text-amber-50 rounded-xl shadow-xl hover:bg-emerald-600" data-day="day1">
+                <div class="card-header p-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold"></h2>
+                        <p class="mt-2 text-sm md:text-base font-medium"></p>
+                    </div>
+                    <svg class="chevron w-6 h-6 text-amber-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-details px-6 pb-6 text-sm md:text-base"></div>
+            </div>
+            <div class="card-container bg-fuchsia-500 text-lime-200 rounded-xl shadow-xl hover:bg-fuchsia-600" data-day="day2">
+                <div class="card-header p-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold"></h2>
+                        <p class="mt-2 text-sm md:text-base font-medium"></p>
+                    </div>
+                    <svg class="chevron w-6 h-6 text-lime-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-details px-6 pb-6 text-sm md:text-base"></div>
+            </div>
+            <div class="card-container bg-blue-500 text-yellow-200 rounded-xl shadow-xl hover:bg-blue-600" data-day="day3">
+                <div class="card-header p-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold"></h2>
+                        <p class="mt-2 text-sm md:text-base font-medium"></p>
+                    </div>
+                    <svg class="chevron w-6 h-6 text-yellow-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-details px-6 pb-6 text-sm md:text-base"></div>
+            </div>
+            <div class="card-container bg-pink-500 text-cyan-50 rounded-xl shadow-xl hover:bg-pink-600" data-day="day4">
+                <div class="card-header p-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold"></h2>
+                        <p class="mt-2 text-sm md:text-base font-medium"></p>
+                    </div>
+                    <svg class="chevron w-6 h-6 text-cyan-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-details px-6 pb-6 text-sm md:text-base"></div>
+            </div>
+            <div class="card-container bg-indigo-500 text-lime-100 rounded-xl shadow-xl hover:bg-indigo-600" data-day="day5">
+                <div class="card-header p-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold"></h2>
+                        <p class="mt-2 text-sm md:text-base font-medium"></p>
+                    </div>
+                    <svg class="chevron w-6 h-6 text-lime-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-details px-6 pb-6 text-sm md:text-base"></div>
+            </div>
+            <div class="card-container bg-red-500 text-teal-100 rounded-xl shadow-xl hover:bg-red-600" data-day="day6">
+                <div class="card-header p-6 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold"></h2>
+                        <p class="mt-2 text-sm md:text-base font-medium"></p>
+                    </div>
+                    <svg class="chevron w-6 h-6 text-teal-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="card-details px-6 pb-6 text-sm md:text-base"></div>
+            </div>
+        </div>
 
-        const daily = {};
-        data.list.forEach(item => {
-          if (item.dt_txt.includes("12:00:00")) {
-            const day = Object.keys(daily).length + 1;
-            daily[day] = {
-              temp: item.main.temp,
-              desc: item.weather[0].description,
-              icon: item.weather[0].icon
+        <!-- 实时汇率计算器 -->
+        <div class="mt-12 p-8 bg-lime-500 text-purple-900 rounded-xl shadow-xl">
+            <p id="rateText" class="text-center mb-6 text-sm md:text-base font-bold"></p>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                <div class="flex flex-col items-center">
+                    <label id="gbpLabel" for="gbpInput" class="text-lg font-medium mb-2">英镑 (GBP)</label>
+                    <input type="number" id="gbpInput" class="w-40 md:w-48 p-3 rounded-lg text-lg text-center font-bold bg-white text-gray-900 focus:outline-none focus:ring-4 focus:ring-purple-300">
+                </div>
+                <div class="text-3xl font-bold hidden md:block">&#8596;</div>
+                <div class="flex flex-col items-center">
+                    <label id="cnyLabel" for="cnyInput" class="text-lg font-medium mb-2">人民币 (CNY)</label>
+                    <input type="number" id="cnyInput" class="w-40 md:w-48 p-3 rounded-lg text-lg text-center font-bold bg-white text-gray-900 focus:outline-none focus:ring-4 focus:ring-purple-300">
+                </div>
+            </div>
+        </div>
+
+        <!-- 地图部分 -->
+        <div class="mt-12 p-8 bg-gray-100 rounded-xl shadow-xl">
+            <h2 id="mapTitle" class="text-2xl font-bold text-gray-900 text-center mb-6">交互式行程地图</h2>
+            <div id="map"></div>
+            <div class="mt-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                <button id="getUserLocation" class="bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-gray-800 transition-colors duration-300 flex-grow">获取我的位置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入 Leaflet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    
+    <script>
+        let map;
+        let activeMarkers = [];
+        let routePolyline = null;
+        let userLocationMarker = null;
+
+        const iternaryLocations = {
+            day1: [
+                { name: '伦敦尤斯顿火车站', coords: [51.5284, -0.1332] },
+                { name: '老街地铁站', coords: [51.5246, -0.0878] },
+                { name: '伦敦塔', coords: [51.5081, -0.0759] },
+                { name: '伦敦塔桥', coords: [51.5079, -0.0754] },
+                { name: '圣凯瑟琳码头', coords: [51.5057, -0.0708] },
+                { name: '巴特勒码头', coords: [51.5028, -0.0718] }
+            ],
+            day2: [
+                { name: '白金汉宫', coords: [51.5014, -0.1419] },
+                { name: '威斯敏斯特教堂', coords: [51.4994, -0.1275] },
+                { name: '国会大厦', coords: [51.4997, -0.1248] },
+                { name: '维多利亚和阿尔伯特博物馆', coords: [51.4966, -0.1725] },
+                { name: '哈罗德百货', coords: [51.4994, -0.1655] },
+                { name: 'Burger and Lobster', coords: [51.4994, -0.1655] }
+            ],
+            day3: [
+                { name: '大英博物馆', coords: [51.5194, -0.1269] },
+                { name: '伦敦政治经济学院', coords: [51.5146, -0.1166] },
+                { name: '科芬园', coords: [51.5130, -0.1235] },
+                { name: '福伊尔斯书店', coords: [51.5142, -0.1307] },
+                { name: '苏豪区', coords: [51.5134, -0.1374] }
+            ],
+            day4: [
+                { name: '剑桥火车站', coords: [52.1953, 0.1465] },
+                { name: '国王学院', coords: [52.2053, 0.1218] },
+                { name: '三一学院', coords: [52.2088, 0.1167] },
+                { name: '康河', coords: [52.2064, 0.1168] },
+                { name: 'Sticks\'n\'Sushi - Islington', coords: [51.5372, -0.1066] }
+            ],
+            day5: [
+                { name: '国家美术馆', coords: [51.5089, -0.1283] },
+                { name: '博罗市场', coords: [51.5054, -0.0898] },
+                { name: '莎士比亚环球剧场', coords: [51.5082, -0.0969] },
+                { name: '泰特现代艺术馆', coords: [51.5076, -0.0994] },
+                { name: 'Blacklock Shoreditch', coords: [51.5242, -0.0782] }
+            ],
+            day6: [
+                { name: '布里克巷市集', coords: [51.5186, -0.0734] },
+                { name: '希思罗机场', coords: [51.4700, -0.4543] }
+            ]
+        };
+
+        function clearMap() {
+            activeMarkers.forEach(marker => map.removeLayer(marker));
+            activeMarkers = [];
+            if (routePolyline) {
+                map.removeLayer(routePolyline);
+            }
+        }
+
+        function showLocationsOnMap(dayId) {
+            clearMap();
+            const locations = iternaryLocations[dayId];
+            if (!locations) return;
+            const latLngs = [];
+            locations.forEach(loc => {
+                const marker = L.marker(loc.coords).addTo(map)
+                    .bindPopup(`<b>${loc.name}</b>`).openPopup();
+                activeMarkers.push(marker);
+                latLngs.push(loc.coords);
+            });
+            if (latLngs.length > 1) {
+                routePolyline = L.polyline(latLngs, { color: 'blue', weight: 4 }).addTo(map);
+            }
+            if (latLngs.length > 0) {
+                map.fitBounds(L.latLngBounds(latLngs).pad(0.5));
+            }
+        }
+
+        window.onload = () => {
+            if (typeof L === 'undefined' || typeof L.map !== 'function') {
+                console.error("Leaflet library is not fully loaded.");
+                return;
+            }
+            
+            map = L.map('map').setView([51.505, -0.09], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            const langData = {
+                'zh': {
+                    pageTitle: "无价伦敦之旅",
+                    subTitle: "",
+                    days: [
+                        { title: "第一天：10月7日, 星期二", subtitle: "从伯明翰出发，抵达伦敦，并在泰晤士河畔漫步。", details: `
+                            <h3 class="font-bold text-lg mb-2">上午至下午：从伯明翰到伦敦</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从伯明翰新街站 (Birmingham New Street) 乘坐 Avanti West Coast 列车前往伦敦尤斯顿站 (London Euston Station)，车程约为1.5至2小时。</li>
+                                <li><strong>贴士：</strong>建议提前通过 Trainline 或 National Rail 官网预订火车票，并研究 “分段购票”（Split Ticketing） 策略，这可以帮助您节省大量费用。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：入住住所</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从尤斯顿站搭乘 北线（Northern Line） 地铁，在 老街站 (Old Street Station) 下车，出站后步行即可到达位于 Quaker Court on Banner Street 的住所。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">傍晚：泰晤士河畔漫步</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>活动：</strong>安顿后，可步行至附近的伦敦塔 (Tower of London) 和伦敦塔桥 (Tower Bridge)，欣赏其宏伟外观。随后沿着泰晤士河漫步，经过 圣凯瑟琳码头 (St. Katharine Docks) 和 巴特勒码头 (Butler's Wharf)，感受伦敦的初夜景致。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">晚餐推荐</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>推荐餐厅：</strong>圣凯瑟琳码头的 The Dickens Inn 或巴特勒码头附近的 Wright Brothers。</li>
+                            </ul>
+                        `},
+                        { title: "第二天：10月8日, 星期三", subtitle: "上午观看白金汉宫卫兵换岗，下午参观博物馆与百货。", details: `
+                            <h3 class="font-bold text-lg mb-2">上午：皇家之旅</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从利物浦街站 (Liverpool Street Station) 乘坐地铁至 格林公园站 (Green Park)。</li>
+                                <li><strong>活动：</strong>步行至白金汉宫，在 上午11:00 观看举世闻名的 卫兵换岗仪式。建议提前在10:30前抵达以占据有利位置。仪式结束后，可步行约15分钟，欣赏威斯敏斯特教堂和国会大厦的外部建筑。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：艺术与购物</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从威斯敏斯特站乘坐地铁至 南肯辛顿站 (South Kensington)。</li>
+                                <li><strong>活动：</strong>参观 维多利亚和阿尔伯特博物馆（V&A），这里是世界领先的艺术与设计殿堂（入场免费，建议官网预定免费定时票）。之后步行至附近的 哈罗德百货 (Harrods)，体验顶级购物。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">晚餐</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>推荐餐厅：</strong>Burger and Lobster (骑士桥店)，位于哈罗德百货对面。强烈建议提前预订以确保有位。</li>
+                            </ul>
+                        `},
+                        { title: "第三天：10月9日, 星期四", subtitle: "大英博物馆文化之旅，并在夜晚欣赏伦敦西区的音乐剧。", details: `
+                            <h3 class="font-bold text-lg mb-2">上午：大英博物馆</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从利物浦街站乘坐 中央线（Central Line） 地铁至 托特纳姆法院路站 (Tottenham Court Road)。</li>
+                                <li><strong>活动：</strong>参观 大英博物馆，探索其世界级的馆藏，如罗塞塔石碑和埃及木乃伊（入场免费，建议官网预定免费定时票）。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：西区深度探索</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>活动：</strong>从大英博物馆步行，探索 伦敦政治经济学院 (LSE)，随后在 科芬园 (Covent Garden) 的 福伊尔斯书店 (Foyles) 享受阅读时光，最后在充满活力的 Soho 区 自由漫步。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">夜晚：音乐剧与晚餐</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>活动：</strong>在西区剧院欣赏经典剧目 《歌剧魅影》。建议通过官网或 TodayTix 等应用提前订票。</li>
+                                <li><strong>晚餐推荐：</strong>在科芬园或 Soho 区附近选择一家餐厅。</li>
+                            </ul>
+                        `},
+                        { title: "第四天：10月10日, 星期五", subtitle: "前往剑桥感受学术氛围，晚上享用日式烤串。", details: `
+                            <h3 class="font-bold text-lg mb-2">上午：前往剑桥</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从伦敦国王十字车站 (King's Cross) 乘坐火车前往剑桥 (Cambridge)，车程约48分钟。同样，提前购票并使用“分段购票”策略可以节省费用。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：剑桥探索</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>活动：</strong>抵达剑桥后，可步行游览著名学府—— 国王学院 (King's College) 和 三一学院 (Trinity College)。您还可以选择乘坐平底船 (Punting)，在 康河 (River Cam) 上感受独特的学院风光。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">傍晚：返回伦敦与晚餐</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>活动：</strong>从剑桥返回伦敦国王十字车站，车程约为1小时。</li>
+                                <li><strong>晚餐推荐：：</strong>Sticks'n'Sushi - Islington，这是一家非常受欢迎的日式烤串店，强烈建议提前预订。</li>
+                            </ul>
+                        `},
+                        { title: "第五天：10月11日, 星期六", subtitle: "参观国家美术馆，并在泰特现代艺术馆感受现代艺术。", details: `
+                            <h3 class="font-bold text-lg mb-2">上午：国家美术馆</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>乘坐地铁至 查林十字站 (Charing Cross)。</li>
+                                <li><strong>活动：</strong>参观 位于特拉法加广场的 国家美术馆 (National Gallery)，这里收藏了从中世纪到19世纪的欧洲绘画珍品（入场免费，部分特别展览需购票）。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">中午：美食之旅</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>活动：</strong>从国家美术馆乘坐地铁或步行前往 伦敦桥站 (London Bridge)，在 博罗市场 (Borough Market) 品尝各种美食，感受地道的市集氛围。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：泰晤士河南岸</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从伦敦桥步行即可到达。</li>
+                                <li><strong>活动：</strong>在泰晤士河南岸，您可以参观 莎士比亚环球剧场 (Shakespeare's Globe) 和 泰特现代艺术馆 (Tate Modern)，感受伦敦的艺术气息。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">晚餐</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>推荐餐厅：</strong>Blacklock Shoreditch，以其出色的烤肉而闻名，提供地道英式风味，建议提前预订。</li>
+                            </ul>
+                        `},
+                        { title: "第六天：10月12日, 星期日", subtitle: "在布里克巷市集淘货，随后从希思罗机场返程。", details: `
+                            <h3 class="font-bold text-lg mb-2">上午：布里克巷市集</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从住所步行即可到达。</li>
+                                <li><strong>活动：</strong>探索 布里克巷市集 (Brick Lane Market) 的二手服饰、古董和街头艺术。这是一个充满活力的地区，可以购买一些独特的纪念品。</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：前往机场</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>交通方式：</strong>从老街站乘坐地铁前往 希思罗机场 (Heathrow Airport)，或从尤斯顿站乘坐机场快线 (Heathrow Express) 到达。</li>
+                                <li><strong>活动：</strong>前往机场准备返程。</li>
+                            </ul>
+                        `},
+                    ],
+                    rateText: "获取实时汇率，规划您的预算。",
+                    gbpLabel: "英镑 (GBP)",
+                    cnyLabel: "人民币 (CNY)",
+                    mapTitle: "交互式行程地图",
+                    getUserLocationButton: "获取我的位置"
+                },
+                'en': {
+                    pageTitle: "Priceless Journey in London",
+                    subTitle: "Your exclusive itinerary from Birmingham to Heathrow.",
+                    days: [
+                        { title: "Day 1: Tuesday, October 7", subtitle: "Depart from Birmingham, arrive in London, and stroll along the Thames.", details: `
+                            <h3 class="font-bold text-lg mb-2">Morning to Afternoon: From Birmingham to London</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> Take an Avanti West Coast train from Birmingham New Street to London Euston Station, a journey of approximately 1.5 to 2 hours.</li>
+                                <li><strong>Tip:</strong> It is recommended to book your train tickets in advance through Trainline or the National Rail official website. Consider using "Split Ticketing" to save a significant amount of money.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: Settle into Accommodation</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> From Euston Station, take the Northern Line tube to Old Street Station, and your accommodation at Quaker Court on Banner Street is a short walk from there.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Evening: Thames River Walk</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Activity:</strong> After settling in, you can walk to the nearby Tower of London and Tower Bridge to admire their magnificent exterior. Then, stroll along the Thames River, passing St. Katharine Docks and Butler's Wharf, to enjoy London's early evening scenery.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Dinner Recommendation</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Recommended Restaurants:</strong> The Dickens Inn at St. Katharine Docks or Wright Brothers near Butler's Wharf.</li>
+                            </ul>
+                        `},
+                        { title: "Day 2: Wednesday, October 8", subtitle: "Witness the Changing of the Guard in the morning, and visit museums and department stores in the afternoon.", details: `
+                            <h3 class="font-bold text-lg mb-2">Morning: Royal Tour</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> Take the tube from Liverpool Street Station to Green Park Station.</li>
+                                <li><strong>Activity:</strong> Walk to Buckingham Palace to witness the famous Changing of the Guard ceremony at 11:00 AM. It's recommended to arrive by 10:30 AM to get a good spot. After the ceremony, you can walk for about 15 minutes to see the exterior of Westminster Abbey and the Houses of Parliament.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: Art and Shopping</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> Take the tube from Westminster Station to South Kensington.</li>
+                                <li><strong>Activity:</strong> Visit the Victoria and Albert Museum (V&A), a world-leading museum of art and design (free admission, booking a free timed ticket online is recommended). Afterwards, walk to the nearby Harrods department store for a luxury shopping experience.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Dinner</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Recommended Restaurant:</strong> Burger and Lobster (Knightsbridge branch), located opposite Harrods. It is highly recommended to book in advance to ensure a table.</li>
+                            </ul>
+                        `},
+                        { title: "Day 3: Thursday, October 9", subtitle: "A cultural journey to the British Museum, and enjoy a West End musical in the evening.", details: `
+                            <h3 class="font-bold text-lg mb-2">Morning: The British Museum</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> Take the Central Line tube from Liverpool Street Station to Tottenham Court Road Station.</li>
+                                <li><strong>Activity:</strong> Visit the British Museum to explore its world-class collection, such as the Rosetta Stone and Egyptian mummies (free admission, booking a free timed ticket online is recommended).</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：西区深度探索</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Activity:</strong> Walk from the British Museum to explore the London School of Economics (LSE), then enjoy some reading time at Foyles bookstore in Covent Garden, and finally take a leisurely stroll through the vibrant Soho area.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Evening: Musical and Dinner</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Activity:</strong> Enjoy the classic musical "The Phantom of the Opera" at a West End theatre. It's recommended to book tickets in advance through the official website or apps like TodayTix.</li>
+                                <li><strong>Dinner Recommendation:</strong> Choose a restaurant near Covent Garden or in the Soho area.</li>
+                            </ul>
+                        `},
+                        { title: "Day 4: Friday, October 10", subtitle: "Travel to Cambridge to soak in the academic atmosphere, and have Japanese skewers for dinner.", details: `
+                            <h3 class="font-bold text-lg mb-2">Morning: Travel to Cambridge</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> Take a train from London King's Cross Station to Cambridge, a journey of about 48 minutes. Again, booking tickets in advance and using "Split Ticketing" can save money.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">下午：剑桥探索</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Activity:</strong>Upon arrival in Cambridge, you can walk to visit the famous colleges, King's College and Trinity College. You can also opt for a Punting tour on the River Cam to experience the unique college scenery.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Evening: Return to London and Dinner</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Activity:</strong> Return to London King's Cross Station from Cambridge, a journey of about 1 hour.</li>
+                                <li><strong>Dinner Recommendation:</strong> Sticks'n'Sushi - Islington, a very popular Japanese skewer restaurant. It is highly recommended to book in advance.</li>
+                            </ul>
+                        `},
+                        { title: "Day 5: Saturday, October 11", subtitle: "Visit the National Gallery and experience modern art at the Tate Modern.", details: `
+                            <h3 class="font-bold text-lg mb-2">Morning: The National Gallery</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> Take the tube to Charing Cross Station.</li>
+                                <li><strong>Activity:</strong> Visit the National Gallery in Trafalgar Square, which houses a collection of European paintings from the Middle Ages to the 19th century (free admission, some special exhibitions may require tickets).</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Noon: Foodie Tour</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Activity:</strong> Take the tube or walk from the National Gallery to London Bridge Station and sample various foods at Borough Market, experiencing the authentic market atmosphere.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: South Bank of the Thames</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> It's a short walk from London Bridge.</li>
+                                <li><strong>Activity:</strong> On the South Bank of the Thames, you can visit Shakespeare's Globe and the Tate Modern to experience London's artistic vibe.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Dinner</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Recommended Restaurant:</strong> Blacklock Shoreditch, known for its excellent roast meats, offering an authentic British flavor. It is recommended to book in advance.</li>
+                            </ul>
+                        `},
+                        { title: "Day 6: Sunday, October 12", subtitle: "Go treasure hunting at Brick Lane Market, then fly back from Heathrow Airport.", details: `
+                            <h3 class="font-bold text-lg mb-2">Morning: Brick Lane Market</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> It's a short walk from your accommodation.</li>
+                                <li><strong>Activity:</strong> Explore Brick Lane Market for vintage clothes, antiques, and street art. It's a vibrant area where you can buy unique souvenirs.</li>
+                            </ul>
+                            <h3 class="font-bold text-lg mt-4 mb-2">Afternoon: Travel to Airport</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Transportation:</strong> Take the tube from Old Street Station to Heathrow Airport, or take the Heathrow Express from Euston Station to get there.</li>
+                                <li><strong>Activity:</strong> Head to the airport to prepare for your return flight.</li>
+                            </ul>
+                        `},
+                    ],
+                    rateText: "Get real-time exchange rates to plan your budget.",
+                    gbpLabel: "Pounds (GBP)",
+                    cnyLabel: "Yuan (CNY)",
+                    mapTitle: "Interactive Itinerary Map",
+                    getUserLocationButton: "Get My Location"
+                }
             };
-          }
-        });
+            let currentLang = 'zh';
 
-        Object.keys(daily).forEach(day => {
-          const el = document.getElementById(`weather-day-${day}`);
-          if (el) {
-            el.innerHTML = `
-              <img class="weather-icon" src="https://openweathermap.org/img/wn/${daily[day].icon}.png" alt="天气图标">
-              ${daily[day].temp}°C，${daily[day].desc}
-            `;
-          }
-        });
-      } catch (err) {
-        console.error("天气获取失败:", err);
-      }
-    }
-  </script>
+            function updateUI(lang) {
+                const data = langData[lang];
+                document.getElementById('pageTitle').textContent = data.pageTitle;
+                document.getElementById('subTitle').textContent = data.subTitle;
+                document.getElementById('rateText').textContent = data.rateText;
+                document.getElementById('gbpLabel').textContent = data.gbpLabel;
+                document.getElementById('cnyLabel').textContent = data.cnyLabel;
+                document.getElementById('mapTitle').textContent = data.mapTitle;
+                document.getElementById('getUserLocation').textContent = data.getUserLocationButton;
+                document.getElementById('mainTitle').textContent = data.pageTitle;
+
+                const cards = document.querySelectorAll('.card-container');
+                cards.forEach((card, index) => {
+                    const dayData = data.days[index];
+                    card.querySelector('h2').textContent = dayData.title;
+                    card.querySelector('p').textContent = dayData.subtitle;
+                    card.querySelector('.card-details').innerHTML = dayData.details;
+                });
+            }
+
+            // 加载中文UI
+            updateUI('zh');
+
+            document.getElementById('langToggle').addEventListener('click', () => {
+                currentLang = currentLang === 'zh' ? 'en' : 'zh';
+                updateUI(currentLang);
+            });
+
+            // 展开/收起卡片功能
+            document.querySelectorAll('.card-header').forEach(header => {
+                header.addEventListener('click', (e) => {
+                    const card = header.closest('.card-container');
+                    const dayId = card.dataset.day;
+                    const isOpen = card.classList.contains('open');
+
+                    // 关闭所有其他卡片
+                    document.querySelectorAll('.card-container').forEach(c => {
+                        if (c !== card) {
+                            c.classList.remove('open');
+                        }
+                    });
+
+                    // 切换当前卡片
+                    card.classList.toggle('open');
+                    if (card.classList.contains('open')) {
+                        showLocationsOnMap(dayId);
+                    } else {
+                        clearMap();
+                    }
+                });
+            });
+
+            // 汇率计算器
+            const gbpInput = document.getElementById('gbpInput');
+            const cnyInput = document.getElementById('cnyInput');
+            let exchangeRate = 9.15; // 静态汇率
+
+            const convertGBPtoCNY = () => {
+                const gbp = parseFloat(gbpInput.value);
+                if (!isNaN(gbp)) {
+                    cnyInput.value = (gbp * exchangeRate).toFixed(2);
+                } else {
+                    cnyInput.value = '';
+                }
+            };
+
+            const convertCNYtoGBP = () => {
+                const cny = parseFloat(cnyInput.value);
+                if (!isNaN(cny)) {
+                    gbpInput.value = (cny / exchangeRate).toFixed(2);
+                } else {
+                    gbpInput.value = '';
+                }
+            };
+
+            gbpInput.addEventListener('input', convertGBPtoCNY);
+            cnyInput.addEventListener('input', convertCNYtoGBP);
+
+            // 获取用户位置
+            document.getElementById('getUserLocation').addEventListener('click', () => {
+                if ('geolocation' in navigator) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const { latitude, longitude } = position.coords;
+                            if (userLocationMarker) {
+                                map.removeLayer(userLocationMarker);
+                            }
+                            userLocationMarker = L.marker([latitude, longitude]).addTo(map)
+                                .bindPopup('您当前的位置').openPopup();
+                            map.setView([latitude, longitude], 13);
+                        },
+                        (error) => {
+                            console.error("获取位置失败:", error);
+                            alert("无法获取您的位置，请确保已授予地理位置权限。");
+                        }
+                    );
+                } else {
+                    alert("您的浏览器不支持地理位置功能。");
+                }
+            });
+        };
+    </script>
 </body>
 </html>
